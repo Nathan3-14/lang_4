@@ -8,9 +8,7 @@ def handle_statement(statement: str, vars: Dict[str, Any]) -> Any:
     modifiers = {
         "=": "equal",
         "+": "add",
-        "-": "subtract",
-        "*": "multiply",
-        "/": "divide"
+        "-": "subtract"
     }
     modifier_keys = list(modifiers.keys())
     modifier = modifiers["="]
@@ -40,9 +38,9 @@ def handle_statement(statement: str, vars: Dict[str, Any]) -> Any:
                 current += to_modify
             case "subtract":
                 current -= to_modify
-            case "multiply":
-                current *= to_modify
-            case "divide":
+            # case "multiply":
+            #     current *= to_modify
+            # case "divide":
                 current /= to_modify
         print(f"    DEBUG: {str(item).ljust(10)} //  {str(modifier).ljust(10)} //  {str(to_modify).ljust(10)} //  {current}")
     return current
