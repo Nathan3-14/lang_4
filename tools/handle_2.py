@@ -12,9 +12,11 @@ def set_types(statement: str) -> List[Any]:
             if to_add.isdigit():
                 to_add = int(to_add)
             elif to_add.startswith("\"") and to_add.endswith("\""):
+                print(f"{to_add} starts with \"")
                 to_add = to_add[1:-1]
             else:
-                print("Interpret Err")
+                print(f"'{to_add}' doesn't start with \"")
+                print(f"{to_add} is not valid type")
 
             to_return.append(to_add)
             to_return.append(character)
