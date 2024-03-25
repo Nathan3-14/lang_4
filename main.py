@@ -14,12 +14,27 @@ def execute_command(phrase: str) -> bool:
 		case "print":
 			print(handle_statement(phrase[1:-1], variables))
 		case "var":
-			match phrase[0]:
+			phrase_split = []
+			current = ""
+			is_str = False
+			for character in phrase:
+				if character == " " and not is_str:
+					phrase_split.append(current)
+					current = ""
+					continue
+				if character == "\"":
+					is_str = not is_str
+
+				current += character
+			phrase_split.append(current)
+				
+
+			match phrase_split[1]:
 				case "=":
-					print("setting")
+					variables[phrase_split[0]] = phrase_split[2][1:-1]
+					print(f"{variables} //")
 				case _:
-					print(f"{phrase}")
-			# variables[phrase_split] = 
+					pass
 		case _:
 			return False
 	return True
