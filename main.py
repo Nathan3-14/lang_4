@@ -3,7 +3,7 @@ import re
 import sys
 from typing import Any, Dict, List
 from rich import print
-from tools import handle_statement, split_at_first
+from tools import handle_statement, split_at_first, set_type
 
 
 def execute_command(phrase: str) -> bool:
@@ -31,8 +31,8 @@ def execute_command(phrase: str) -> bool:
 
 			match phrase_split[1]:
 				case "=":
-					variables[phrase_split[0]] = phrase_split[2][1:-1]
-					print(f"{variables} //")
+					variables[phrase_split[0]] = set_type(phrase_split[2], variables)
+					print(f"{variables[phrase_split[0]]} //")
 				case _:
 					pass
 		case _:
@@ -64,6 +64,8 @@ variables: Dict[str, Any] = {}
 
 for index, line in enumerate(open(input_file).readlines()):
 	line = line.strip("\n")
+	if line == "":
+		continue
 
 	#* Indent Calculation *#
 	indent = 0
@@ -72,15 +74,7 @@ for index, line in enumerate(open(input_file).readlines()):
 		line = line[1:]
 	
 
-	# line_split = [item for item in re.split(r"[\(\),]", line) if item != ""]
-	# if len(line_split) == 0:
-	# 	line_split.append("")
-	# main_command = line_split[0]
-	# print(line_split)
-	
-	# success = execute_command(line_split)
-
 	success = execute_command(line)
 
-	debug_line = f"{str(index).ljust(3)} |--{'---'*indent}> {line}"
+	debug_line = f"{str(index+1).ljust(3)} |--{'---'*indent}> {line}"
 	print(f"{debug_line.ljust(40)} {f'[green]{tick} SUCCESS[/green]' if success else f'[red]{cross} FAILURE[/red]'}")
