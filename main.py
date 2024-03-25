@@ -3,6 +3,7 @@ import re
 import sys
 from typing import Any, List
 from rich import print
+from tools import *
 
 
 def execute_command(words: List[Any]) -> bool:

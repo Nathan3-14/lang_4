@@ -1,1 +1,1 @@
-from .funcs import *
+from .statement import handle_statement
