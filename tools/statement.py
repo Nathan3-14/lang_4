@@ -1,17 +1,12 @@
 from typing import Any, Dict, List
-# from rich import print
+from rich import print as rprint
 
 MODIFIERS = ["=", "+", "-"]
 
 def set_type(item: Any, variables: Dict[str, Any]) -> Any:
-	var_keys = list(vars.keys())
+	var_keys = list(variables.keys())
 	if item in var_keys:
-		# print(f" {item}  is in  {var_keys}")
-		# print(f"{variables[item]}")
-		# print(f"{str(variables[item]).isdigit()}")
 		item = f"\"{variables[item]}\"" if type(variables[item]) == str else variables[item]
-	# else:
-	# 	print(f" {item}  is not in  {var_keys}")
 
 
 	if str(item).isdigit():
@@ -20,14 +15,13 @@ def set_type(item: Any, variables: Dict[str, Any]) -> Any:
 		# print(f"{item} starts with \"")
 		item = item[1:-1]
 	else:
-		print(f"{item} is not valid type")
+		rprint(f"  [red]Err:[/red] '{item}' is not recognised as a type")
+		quit()
 	return item
 
 
 def get_types(statement: str, variables: Dict[str, Any]) -> List[Any]:
 	to_return: List = []
-
-	var_keys = list(variables.keys())
 	
 	
 	to_add = ""
