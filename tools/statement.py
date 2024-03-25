@@ -12,7 +12,6 @@ def set_type(item: Any, variables: Dict[str, Any]) -> Any:
 	if str(item).isdigit():
 		item = int(item)
 	elif item.startswith('"') and item.endswith('"'):
-		# print(f"{item} starts with \"")
 		item = item[1:-1]
 	else:
 		rprint(f"  [red]Err:[/red] '{item}' is not recognised as a type")

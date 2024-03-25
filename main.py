@@ -12,6 +12,7 @@ def execute_command(phrase: str) -> bool:
 
 	match command:
 		case "print":
+			# print(f"//// {phrase} //// {phrase[1:-1]}")
 			print(handle_statement(phrase[1:-1], variables))
 		case "var":
 			phrase_split = []
@@ -32,7 +33,7 @@ def execute_command(phrase: str) -> bool:
 			match phrase_split[1]:
 				case "=":
 					variables[phrase_split[0]] = set_type(phrase_split[2], variables)
-					print(f"{variables[phrase_split[0]]} //")
+					# print(f"{variables[phrase_split[0]]} //")
 				case _:
 					pass
 		case _:
@@ -64,7 +65,7 @@ variables: Dict[str, Any] = {}
 
 for index, line in enumerate(open(input_file).readlines()):
 	line = line.strip("\n")
-	if line == "":
+	if line == "" or line.startswith("//"):
 		continue
 
 	#* Indent Calculation *#
@@ -77,4 +78,4 @@ for index, line in enumerate(open(input_file).readlines()):
 	success = execute_command(line)
 
 	debug_line = f"{str(index+1).ljust(3)} |--{'---'*indent}> {line}"
-	print(f"{debug_line.ljust(40)} {f'[green]{tick} SUCCESS[/green]' if success else f'[red]{cross} FAILURE[/red]'}")
+	# print(f"{debug_line.ljust(40)} {f'[green]{tick} SUCCESS[/green]' if success else f'[red]{cross} FAILURE[/red]'}")

@@ -6,7 +6,8 @@ print(test)
 var i_1 = 2
 var i_2 = 3
 print(i_1 + i_2)
-var i_3 = (i_1 + i_2)
+var i_3 = i_1 + i_2
+print(i_3)
 
-if (1 == i_1) 
-	print("1 = <v>i_1</v>")
+// if (1 == i_1) 
+// 	print("1 = <v>i_1</v>")
