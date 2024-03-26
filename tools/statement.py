@@ -26,7 +26,7 @@ def get_types(statement: str, variables: Dict[str, Any]) -> List[Any]:
 	to_add = ""
 	in_str = False
 	for character in statement:
-		if character in MODIFIERS:
+		if character in MODIFIERS and not in_str:
 			to_add = set_type(to_add, variables)
 			to_return.append(to_add)
 			to_return.append(character)
@@ -55,7 +55,10 @@ def handle_statement(statement: str, variables: Dict[str, Any]) -> Any:
 				to_return = part
 				modifier = None
 			case "+":
-				to_return += part
+				try:
+					to_return += part
+				except TypeError:
+					to_return = str(to_return) + str(part)
 				modifier = None
 			case "-":
 				to_return -= part
