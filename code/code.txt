@@ -11,7 +11,7 @@ print(i_1 + i_2)
 print(i_3)
 
 
-if (i_3 + 1 == 6)
+if (i_3 + 1 == 5 + 1)
 	print(i_3 + " == 5")
 	if (i_2 == 3)
 		print("i_2 == 3")

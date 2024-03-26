@@ -19,7 +19,7 @@ def execute_command(phrase: str, indent: int) -> bool:
 			match phrase_split[1]:
 				case "=":
 					# make this handle '3 + 2' and similar
-					variables[phrase_split[0]] = handle_statement(phrase_split[2:], variables)
+					variables[phrase_split[0]] = handle_statement(" ".join( phrase_split[2:]), variables)
 				case _:
 					pass
 		case "if":
@@ -27,16 +27,24 @@ def execute_command(phrase: str, indent: int) -> bool:
 
 			current = False
 			current_link = "||"
-			current_comparison = []
-			for part in phrase_split:
+			current_comparison: List = []
+			for index, part in enumerate(phrase_split):
+				done = index+1 == len(phrase_split)
+
 				if part in ["&&", "||"]:
 					current_link = part
 					continue
 				
-				current_comparison.append(part)
-				print(f"Current comparison: {current_comparison}")
+				if len(current_comparison) > 0:
+					if (current_comparison[-1] not in ["=="]) and (part != "=="):
+						current_comparison[-1] += part
+					else:
+						current_comparison.append(part)
+				else:
+					current_comparison.append(part)
+				# print(f"Current comparison: {current_comparison}")
 				# mmake itr so it handles up to the '==' instead of just the middle
-				if "==" in current_comparison and len(current_comparison) >= 3:
+				if done:
 					temp = False
 					match current_comparison[1]:
 						case "==":
@@ -50,7 +58,6 @@ def execute_command(phrase: str, indent: int) -> bool:
 					current_comparison = []
 			
 			if_bools[indent+1] = current
-			print(if_bools)
 		case _:
 			return False
 	return True
