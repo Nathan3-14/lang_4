@@ -12,15 +12,14 @@ def execute_command(phrase: str, indent: int) -> bool:
 
 	match command:
 		case "print":
-			# print(f"//// {phrase} //// {phrase[1:-1]}")
 			print(handle_statement(phrase[1:-1], variables))
 		case "var":
 			phrase_split = split_at_space(phrase)
 
 			match phrase_split[1]:
 				case "=":
-					# make this handle 3 + 2 and similar
-					variables[phrase_split[0]] = set_type(phrase_split[2], variables)
+					# make this handle '3 + 2' and similar
+					variables[phrase_split[0]] = handle_statement(phrase_split[2:], variables)
 				case _:
 					pass
 		case "if":
@@ -35,8 +34,9 @@ def execute_command(phrase: str, indent: int) -> bool:
 					continue
 				
 				current_comparison.append(part)
+				print(f"Current comparison: {current_comparison}")
 				# mmake itr so it handles up to the '==' instead of just the middle
-				if "==" in current_comparison:
+				if "==" in current_comparison and len(current_comparison) >= 3:
 					temp = False
 					match current_comparison[1]:
 						case "==":
@@ -89,11 +89,11 @@ for index, line in enumerate(open(input_file).readlines()):
 	while line.startswith("\t"):
 		indent += 1
 		line = line[1:]
-	
-	if if_bools[indent]:
-		success = execute_command(line, indent)
+
 	if indent == 0:
 		if_bools[indent+1] = False
+	if if_bools[indent]:
+		success = execute_command(line, indent)
 
 	debug_line = f"{str(index+1).ljust(3)} |--{'---'*indent}> {line}"
 	# print(f"{debug_line.ljust(40)} {f'[green]{tick} SUCCESS[/green]' if success else f'[red]{cross} FAILURE[/red]'}")
