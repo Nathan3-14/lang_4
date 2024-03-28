@@ -1,3 +1,4 @@
+from doctest import debug
 import os
 import re
 import sys
@@ -71,6 +72,8 @@ except IndexError:
 	print(f"[red]Err:[/red] Expected 'main.py <input_path: str>'\n     But recieved 'main.py{' ' if len(args) > 0 else ''}{' '.join(args)}'")
 	quit()
 
+debug_bool = "-d" in args
+
 
 
 #* Constants *#
@@ -103,4 +106,5 @@ for index, line in enumerate(open(input_file).readlines()):
 		success = execute_command(line, indent)
 
 	debug_line = f"{str(index+1).ljust(3)} |--{'---'*indent}> {line}"
-	# print(f"{debug_line.ljust(40)} {f'[green]{tick} SUCCESS[/green]' if success else f'[red]{cross} FAILURE[/red]'}")
+	if debug_bool:
+		print(f"{debug_line.ljust(40)} {f'[green]{tick} SUCCESS[/green]' if success else f'[red]{cross} FAILURE[/red]'}")
